@@ -1,21 +1,33 @@
 <div *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
+
+  <div class="mb-3">
+    <label for="filterText" class="form-label">Find Product</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="please enter search parameters">
+  </div>
+
+  <div *ngIf="filterText" class="alert alert-primary">
+    You have searched for: {{ filterText }} 
+  </div>
+
 <table *ngIf="dataLoaded==true" class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Ürün Adı</th>
-                <th>Kategori</th>
-                <th>Fiyat</th>
-                <th>Stok Adedi</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>+VAT</th>
+                <th>units In Stock</th>
             </tr>
         </thead>
         <tr *ngFor="let product of products">
         <td>{{product.productId}}</td>
-        <td>{{product.productName}}</td>
+        <td>{{product.productName | uppercase}}</td>
         <td>{{product.categoryId}}</td>
         <td>{{product.unitPrice}}</td>
+        <td>{{product.unitPrice | vatAdded:10 | currency}}</td>
         <td>{{product.unitsInStock}}</td>
     </tr>
 </table>
