@@ -40,4 +40,8 @@ export class ProductComponent implements OnInit {
       console.log(this.products);
     })   
   }
+
+  addToCart(product:Product){
+    console.log(product);
+  }
 }
