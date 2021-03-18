@@ -11,6 +11,8 @@ import { NaviComponent } from './components/navi/navi.component';
 import { VatAddedPipe } from './pipes/vat-added.pipe';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 
+import {ToastrModule} from "ngx-toastr";
+
 @NgModule({
   declarations: [
     AppComponent,
