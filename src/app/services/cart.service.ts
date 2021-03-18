@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../models/cartItem';
-import {CartItems } from '../models/cartItems';
+import { CartItems } from '../models/cartItems';
 import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CartService {
 
   constructor() { }
@@ -20,6 +21,11 @@ export class CartService {
       cartItem.quantity = 1;
       CartItems.push(cartItem)
     }
+  }
+
+  removeFromCart(product:Product){
+    let item:CartItem = CartItems.find(c => c.product.productId === product.productId);
+    CartItems.splice(CartItems.indexOf(item),1);
   }
 
   list():CartItem[]{
