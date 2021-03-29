@@ -22,4 +22,10 @@ export class ProductAddComponent implements OnInit {
       categoryId:["",Validators.required]
     })
   }
+
+  add(){
+    let productModel = Object.assign({},this.productAddForm.value);
+    console.log(productModel);
+  }
+
 }
