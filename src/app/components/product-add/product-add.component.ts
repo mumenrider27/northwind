@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { VirtualTimeScheduler } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductAddComponent implements OnInit {
   productAddForm : FormGroup;
-  constructor(private formBuilder:FormBuilder, private productService:ProductService) { }
+  constructor(private formBuilder:FormBuilder, private productService:ProductService, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.createProductAddForm();
@@ -25,8 +27,21 @@ export class ProductAddComponent implements OnInit {
   }
 
   add(){
-    let productModel = Object.assign({},this.productAddForm.value);
-    console.log(productModel);
+    if(this.productAddForm.valid){
+      let productModel = Object.assign({},this.productAddForm.value);
+      this.productService.add(productModel).subscribe(response=>{
+        this.toastrService.success(response.message,"Success");
+      },responseError=>{
+        if(responseError.error.Errors.length > 0){
+          for (let i = 0; i < responseError.error.Errors.length; i++) {
+            this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Validation Error");
+          }
+          
+        }
+      }); 
+    } else {
+      this.toastrService.error("Validation check failed","Attention");
+    }
   }
 
 }
